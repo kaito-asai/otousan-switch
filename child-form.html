@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おとうさんスイッチ — スイッチをつくる</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Noto+Sans+JP:wght@300;400;500;700&family=Kaisei+Decor:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sky: #eaf4fd;
+  --blue: #2b7fc2;
+  --blue-dark: #1a5c94;
+  --blue-light: #5ba3d9;
+  --navy: #0f3a5c;
+  --white: #ffffff;
+  --text: #1a2e40;
+  --text-soft: #5a7a96;
+  --border: rgba(43,127,194,0.18);
+  --shadow: rgba(43,127,194,0.1);
+  --gold: #e6a800;
+  --gold-bg: #fffbef;
+  --red: #e74c3c;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--sky);
+  font-family: 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+  color: var(--text);
+}
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse 260px 90px at 10% 8%, rgba(255,255,255,0.75) 0%, transparent 70%),
+    radial-gradient(ellipse 200px 70px at 80% 5%, rgba(255,255,255,0.6) 0%, transparent 70%),
+    linear-gradient(180deg,#d5eaf8 0%,#eaf4fd 50%,#f3f9ff 100%);
+  pointer-events:none; z-index:0;
+}
+.wrap { position:relative; z-index:1; }
+
+/* HEADER */
+header {
+  background: var(--white);
+  border-bottom: 3px solid var(--blue);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.logo {
+  font-family: 'Yomogi', cursive;
+  font-size: 22px;
+  color: var(--blue-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-badge {
+  font-size: 10px;
+  background: var(--blue);
+  color: white;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.header-tag {
+  background: #fff3cd;
+  border: 1.5px solid #e6a800;
+  color: #7a5500;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+}
+
+/* INNER */
+.inner {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 36px 20px 100px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 56px 24px 48px;
+  max-width: 540px;
+  margin: 0 auto;
+}
+.hero-switch {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#ddeefa,#c5dff5);
+  border: 3px solid rgba(43,127,194,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  box-shadow: 0 8px 28px var(--shadow);
+  animation: float 3.5s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+.hero-knob {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--blue-light), var(--blue-dark));
+  box-shadow: 0 4px 14px rgba(43,127,194,0.5);
+  animation: glow 2.5s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,100%{box-shadow:0 4px 14px rgba(43,127,194,0.4)}
+  50%    {box-shadow:0 4px 28px rgba(43,127,194,0.7),0 0 0 6px rgba(43,127,194,0.1)}
+}
+.hero-title {
+  font-family: 'Yomogi', cursive;
+  font-size: clamp(44px,12vw,80px);
+  color: var(--blue-dark);
+  line-height: 1.15;
+  margin-bottom: 16px;
+  text-shadow: 2px 3px 0 rgba(255,255,255,0.8);
+}
+.hero-desc {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 2.1;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+.btn-hero {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: white;
+  border: none;
+  padding: 18px 52px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(43,127,194,0.38);
+  transition: all 0.2s;
+  letter-spacing: 0.08em;
+}
+.btn-hero:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(43,127,194,0.48); }
+
+/* STEP LABEL */
+.step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blue);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+.screen-h {
+  font-family: 'Kaisei Decor', serif;
+  font-size: 24px;
+  color: var(--navy);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.screen-desc {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.9;
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+
+/* SWITCH CARDS */
+.sw-list { display:flex; flex-direction:column; gap:14px; margin-bottom:32px; }
+.sw-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.sw-card:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 2px 16px rgba(43,127,194,0.2);
+}
+.sw-card.final {
+  background: var(--gold-bg);
+  border-color: rgba(230,168,0,0.3);
+}
+.sw-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-light), var(--blue));
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4px;
+  box-shadow: 0 2px 6px rgba(43,127,194,0.3);
+}
+.sw-card.final .sw-num {
+  background: linear-gradient(135deg, #f0c040, var(--gold));
+}
+.sw-inner { flex:1; }
+.sw-hint {
+  font-size: 11px;
+  color: var(--text-soft);
+  margin-bottom: 7px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.sw-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid rgba(43,127,194,0.15);
+  background: transparent;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  color: var(--text);
+  padding: 6px 0;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.sw-input:focus { border-bottom-color: var(--blue); }
+.sw-input::placeholder { color:rgba(90,122,150,0.38); font-size:14px; }
+.sw-fixed {
+  font-family: 'Kaisei Decor', serif;
+  font-size: 19px;
+  color: #7a5500;
+  padding: 6px 0;
+  font-weight: 700;
+}
+.sw-fixed-note {
+  font-size: 11px;
+  color: rgba(122,85,0,0.65);
+  margin-top: 6px;
+  line-height: 1.6;
+}
+
+/* FIELDS */
+.field { margin-bottom: 22px; }
+.field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-soft);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.field-box {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: border-color 0.2s;
+}
+.field-box:focus-within { border-color: var(--blue); }
+.field-icon { font-size: 17px; opacity: 0.55; }
+.field-input {
+  flex:1;
+  border:none;
+  background:transparent;
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:16px;
+  color:var(--text);
+  outline:none;
+}
+.field-input::placeholder { color:rgba(90,122,150,0.38); font-size:14px; }
+.field-input[type="date"]::-webkit-calendar-picker-indicator { cursor:pointer; opacity:0.45; }
+.err { font-size:12px; color:var(--red); margin-top:6px; display:none; }
+.err.show { display:block; }
+
+/* BTN */
+.btn-full {
+  display:block; width:100%;
+  padding:16px;
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:15px; font-weight:700;
+  border-radius:10px; cursor:pointer;
+  text-align:center; transition:all 0.2s;
+  letter-spacing:0.06em; border:none;
+}
+.btn-full.primary {
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white;
+  box-shadow:0 4px 16px rgba(43,127,194,0.35);
+  margin-bottom:10px;
+}
+.btn-full.primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(43,127,194,0.45); }
+
+/* SCREEN */
+.screen { display:none; animation:fadeUp 0.5s ease; }
+.screen.active { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:28px; left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--navy); color:white;
+  padding:12px 24px; border-radius:8px;
+  font-size:13px;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  z-index:9999; white-space:nowrap;
+  box-shadow:0 4px 20px rgba(15,58,92,0.3);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="logo">
+    🔵 おとうさんスイッチ
+    <span class="logo-badge">2.0</span>
+  </div>
+  <div class="header-tag">✏️ こども用</div>
+</header>
+
+<!-- HOME -->
+<div id="s-home" class="screen active">
+  <div class="hero">
+    <div class="hero-switch"><div class="hero-knob"></div></div>
+    <h1 class="hero-title">おとうさん<br>スイッチ</h1>
+    <p class="hero-desc">
+      父の日に、お父さんへ<br>
+      ひみつの指示を５つ送ろう。<br>
+      最後のスイッチは「はなす」。<br>
+      ふたりの会話がはじまるよ。
+    </p>
+    <button class="btn-hero" onclick="goTo('s-form')">スイッチをつくる ▶</button>
+  </div>
+</div>
+
+<!-- FORM -->
+<div id="s-form" class="screen">
+  <div class="inner">
+    <div class="step-pill">STEP 1 / 2　指示を書く</div>
+    <h2 class="screen-h">お父さんへの<br>指示を５つ書こう</h2>
+    <p class="screen-desc">
+      スイッチ１〜４は自由に書いてね。<br>
+      スイッチ５は「はなす」に決まってるよ。<br>
+      父の日当日、こっそりお父さんに届くよ。
+    </p>
+
+    <div class="sw-list">
+      <div class="sw-card"><div class="sw-num">1</div><div class="sw-inner"><div class="sw-hint">最初のスイッチ</div><input class="sw-input" id="sw1" type="text" placeholder="例：好きな曲を流す" maxlength="25"></div></div>
+      <div class="sw-card"><div class="sw-num">2</div><div class="sw-inner"><div class="sw-hint">２番目のスイッチ</div><input class="sw-input" id="sw2" type="text" placeholder="例：昔の写真を見る" maxlength="25"></div></div>
+      <div class="sw-card"><div class="sw-num">3</div><div class="sw-inner"><div class="sw-hint">３番目のスイッチ</div><input class="sw-input" id="sw3" type="text" placeholder="例：好きなものを食べる" maxlength="25"></div></div>
+      <div class="sw-card"><div class="sw-num">4</div><div class="sw-inner"><div class="sw-hint">４番目のスイッチ</div><input class="sw-input" id="sw4" type="text" placeholder="例：散歩に行く" maxlength="25"></div></div>
+      <div class="sw-card final"><div class="sw-num">5</div><div class="sw-inner"><div class="sw-hint">最後のスイッチ（変えられないよ）</div><div class="sw-fixed">はなす</div><div class="sw-fixed-note">💬 これは変えられないよ。会話をはじめる大切なスイッチ。</div></div></div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">📱 お父さんの電話番号</label>
+      <div class="field-box">
+        <span class="field-icon">📱</span>
+        <input class="field-input" id="phone" type="tel" placeholder="090-0000-0000">
+      </div>
+      <div class="err" id="phone-err">正しい電話番号を入れてね</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">📅 届ける日（父の日）</label>
+      <div class="field-box">
+        <span class="field-icon">📅</span>
+        <input class="field-input" id="send-date" type="date">
+      </div>
+    </div>
+
+    <button class="btn-full primary" onclick="toConfirm()">内容を確認する →</button>
+  </div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function toConfirm() {
+  const vals = ['sw1','sw2','sw3','sw4'].map(id=>document.getElementById(id).value.trim());
+  if (vals.some(v=>!v)) { showToast('⚠️ スイッチ１〜４を全部書いてね'); return; }
+  const ph = document.getElementById('phone').value.trim().replace(/-/g,'');
+  if (!ph.match(/^0\d{9,10}$/)) {
+    document.getElementById('phone-err').classList.add('show'); return;
+  }
+  document.getElementById('phone-err').classList.remove('show');
+
+  const data = {
+    sw: [...vals, 'はなす'],
+    phone: document.getElementById('phone').value.trim(),
+    date: document.getElementById('send-date').value,
+  };
+  // Pass to confirm page via sessionStorage
+  sessionStorage.setItem('otousan_data', JSON.stringify(data));
+  window.location.href = 'child-confirm.html';
+}
+
+let toastT;
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// default Father's Day
+const today=new Date();
+const fd=new Date(today.getFullYear(),5,15);
+if(fd<today) fd.setFullYear(fd.getFullYear()+1);
+const el=document.getElementById('send-date');
+el.value=fd.toISOString().split('T')[0];
+el.min=today.toISOString().split('T')[0];
+</script>
+</body>
+</html>

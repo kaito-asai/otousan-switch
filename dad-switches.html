@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おとうさんスイッチ — スイッチ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sky: #eef6fd;
+  --blue: #2b7fc2;
+  --blue-dark: #1a5c94;
+  --blue-light: #5ba3d9;
+  --navy: #0f3a5c;
+  --white: #ffffff;
+  --text: #1a2e40;
+  --text-soft: #5a7a96;
+  --border: rgba(43,127,194,0.15);
+  --shadow: rgba(43,127,194,0.1);
+  --gold: #e6a800;
+  --gold-bg: #fffbef;
+  --green: #27ae60;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--sky);
+  font-family: 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+  color: var(--text);
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 280px 90px at 15% 8%, rgba(255,255,255,0.72) 0%, transparent 70%),
+    radial-gradient(ellipse 200px 70px at 80% 4%, rgba(255,255,255,0.6) 0%, transparent 70%),
+    linear-gradient(180deg, #cce4f7 0%, #deeefa 25%, #eef6fd 60%, #f5faff 100%);
+  pointer-events: none; z-index: 0;
+}
+.wrap { position: relative; z-index: 1; }
+
+/* HEADER */
+.sw-header {
+  background: var(--white);
+  border-bottom: 3px solid var(--blue);
+  padding: 14px 24px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 2px 12px var(--shadow);
+  position: sticky; top: 0; z-index: 10;
+}
+.sw-header-logo {
+  font-family: 'Yomogi', cursive;
+  font-size: 20px; color: var(--blue-dark);
+}
+.sw-header-count {
+  margin-left: auto;
+  font-size: 12px; color: var(--text-soft); font-weight: 500;
+}
+
+/* BODY */
+.sw-body {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 36px 20px 100px;
+}
+
+.sw-intro-h {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 21px; font-weight: 600;
+  color: var(--navy); margin-bottom: 6px;
+}
+.sw-intro-desc {
+  font-size: 13px; color: var(--text-soft);
+  line-height: 1.9; margin-bottom: 28px;
+  font-weight: 300;
+}
+
+/* progress */
+.prog-track {
+  background: rgba(43,127,194,0.1);
+  border-radius: 6px; height: 6px;
+  margin-bottom: 32px; overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-light), var(--blue));
+  border-radius: 6px;
+  transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* SWITCH ITEMS */
+.sw-list { display: flex; flex-direction: column; gap: 14px; }
+
+.sw-item {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 2px 12px var(--shadow);
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* states */
+.sw-item.waiting {
+  opacity: 0.32;
+  pointer-events: none;
+}
+.sw-item.ready {
+  border-color: rgba(43,127,194,0.42);
+  box-shadow: 0 4px 22px rgba(43,127,194,0.2);
+  animation: readyPulse 2.4s ease-in-out infinite;
+}
+@keyframes readyPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(43,127,194,0.18); }
+  50%      { box-shadow: 0 4px 28px rgba(43,127,194,0.34); }
+}
+.sw-item.done {
+  background: rgba(39,174,96,0.04);
+  border-color: rgba(39,174,96,0.25);
+}
+.sw-item.final {
+  background: var(--gold-bg);
+  border-color: rgba(230,168,0,0.28);
+}
+.sw-item.final.ready {
+  border-color: var(--gold);
+  animation: goldPulse 2.4s ease-in-out infinite;
+}
+@keyframes goldPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(230,168,0,0.15); }
+  50%      { box-shadow: 0 4px 30px rgba(230,168,0,0.38); }
+}
+
+/* Toggle */
+.toggle {
+  width: 54px; height: 30px;
+  border-radius: 15px; border: none;
+  background: rgba(43,127,194,0.14);
+  position: relative; cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: white; top: 4px; left: 4px;
+  transition: left 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.18);
+}
+.sw-item.ready   .toggle { background: var(--blue); }
+.sw-item.done    .toggle { background: var(--green); }
+.sw-item.done    .toggle::after { left: 28px; }
+.sw-item.final.ready .toggle { background: var(--gold); }
+.sw-item.waiting .toggle { cursor: default; }
+
+/* Info */
+.sw-info { flex: 1; min-width: 0; }
+.sw-num-lbl {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+.sw-item.ready  .sw-num-lbl { color: var(--blue); }
+.sw-item.final.ready .sw-num-lbl { color: var(--gold); }
+.sw-item.done   .sw-num-lbl { color: var(--green); }
+
+.sw-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 17px; color: var(--text); font-weight: 400;
+  transition: color 0.3s;
+}
+.sw-item.waiting .sw-text {
+  color: rgba(90,122,150,0.38);
+  font-style: italic; font-size: 14px;
+}
+
+/* Thought bubble */
+.thought-section {
+  margin-top: 24px;
+  display: none;
+  animation: bubbleIn 0.45s cubic-bezier(0.34,1.3,0.64,1);
+}
+.thought-section.show { display: block; }
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.thought-card {
+  background: rgba(255,255,255,0.9);
+  border: 2px solid rgba(43,127,194,0.12);
+  border-radius: 14px;
+  padding: 18px 22px 18px 28px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 2;
+  font-weight: 300;
+  font-style: italic;
+  position: relative;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.thought-card::before {
+  content: '💭';
+  font-style: normal;
+  position: absolute;
+  top: -15px; left: 22px;
+  font-size: 22px;
+}
+.thought-who {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; color: var(--text-soft);
+  opacity: 0.6; margin-bottom: 6px;
+  font-style: normal; font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--navy); color: white;
+  padding: 12px 26px; border-radius: 8px;
+  font-size: 13px;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 9999; white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(15,58,92,0.3);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* CONFETTI */
+.cfwrap { position: fixed; inset: 0; pointer-events: none; z-index: 9998; }
+.cp { position: absolute; top: -10px; animation: fall linear forwards; }
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="sw-header">
+    <div class="sw-header-logo">おとうさんスイッチ</div>
+    <div class="sw-header-count" id="sw-count">0 / 5 完了</div>
+  </div>
+
+  <div class="sw-body">
+    <h2 class="sw-intro-h">５つのスイッチ</h2>
+    <p class="sw-intro-desc">上から順番に押していってください。<br>前のスイッチを押すと、次が開きます。</p>
+
+    <div class="prog-track">
+      <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+
+    <div class="sw-list" id="sw-list"></div>
+
+    <div class="thought-section" id="thought-section">
+      <div class="thought-card">
+        <div class="thought-who">お父さんのひとりごと</div>
+        <div id="thought-text"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="cfwrap" id="cfwrap"></div>
+
+<script>
+const SWITCHES = [
+  '好きな曲を流す',
+  '昔の写真を見る',
+  '好きなものを食べる',
+  '散歩に行く',
+  'はなす',
+];
+
+const THOUGHTS = [
+  'そういや最近、あの曲全然聴いてなかったな…',
+  '懐かしいな。こんな写真まだあったのか。あいつも一緒に見てたっけ。',
+  'ひさしぶりにこれ食べたな。あいつもよく一緒に食べてたな。',
+  '散歩か。最後に一緒に歩いたの、いつだったかな… この指示、もしかして。',
+  '「はなす」か。誰かに、連絡してみるか。',
+];
+
+let step = 0;
+
+function render() {
+  const list = document.getElementById('sw-list');
+  list.innerHTML = '';
+
+  SWITCHES.forEach((text, i) => {
+    const isFinal = i === SWITCHES.length - 1;
+    const isDone  = i < step;
+    const isReady = i === step;
+    const isWait  = i > step;
+
+    const div = document.createElement('div');
+    div.className = 'sw-item'
+      + (isDone  ? ' done'    : '')
+      + (isReady ? ' ready'   : '')
+      + (isWait  ? ' waiting' : '')
+      + (isFinal ? ' final'   : '');
+
+    div.innerHTML = `
+      <button class="toggle"
+        onclick="press(${i})"
+        ${(isWait || isDone) ? 'disabled' : ''}
+        aria-label="スイッチ${i+1}">
+      </button>
+      <div class="sw-info">
+        <div class="sw-num-lbl">${isDone ? '✓ ' : ''}スイッチ ${i + 1}${isFinal ? ' ✦' : ''}</div>
+        <div class="sw-text">${isWait ? '🔒 まだ開いていない' : text}</div>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+
+  document.getElementById('sw-count').textContent = `${step} / ${SWITCHES.length} 完了`;
+  document.getElementById('prog-fill').style.width = (step / SWITCHES.length * 100) + '%';
+}
+
+function press(i) {
+  if (i !== step) return;
+  step++;
+
+  // Show thought bubble
+  document.getElementById('thought-text').textContent = THOUGHTS[i];
+  document.getElementById('thought-section').classList.add('show');
+
+  render();
+  showToast(`スイッチ ${i + 1} オン ✓`);
+
+  if (step >= SWITCHES.length) {
+    confetti();
+    setTimeout(() => {
+      window.location.href = 'dad-finish.html';
+    }, 1200);
+  }
+}
+
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+function confetti() {
+  const c = document.getElementById('cfwrap');
+  c.innerHTML = '';
+  const cols = ['#2b7fc2','#5ba3d9','#e6a800','#27ae60','#ffffff','#cce4f7'];
+  for (let i = 0; i < 70; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    p.style.cssText = `left:${Math.random()*100}%;background:${cols[~~(Math.random()*cols.length)]};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*0.5}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};transform:rotate(${Math.random()*360}deg);`;
+    c.appendChild(p);
+  }
+}
+
+render();
+</script>
+</body>
+</html>

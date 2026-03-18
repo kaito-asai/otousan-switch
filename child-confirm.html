@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おとうさんスイッチ — 確認して送る</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sky:#eaf4fd; --blue:#2b7fc2; --blue-dark:#1a5c94; --blue-light:#5ba3d9;
+  --navy:#0f3a5c; --white:#ffffff; --text:#1a2e40; --text-soft:#5a7a96;
+  --border:rgba(43,127,194,0.18); --shadow:rgba(43,127,194,0.1); --gold:#e6a800;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:var(--sky); font-family:'Noto Sans JP',sans-serif;
+  min-height:100vh; color:var(--text);
+}
+body::before {
+  content:''; position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse 260px 90px at 10% 8%,rgba(255,255,255,0.75) 0%,transparent 70%),
+    radial-gradient(ellipse 200px 70px at 80% 5%,rgba(255,255,255,0.6) 0%,transparent 70%),
+    linear-gradient(180deg,#d5eaf8 0%,#eaf4fd 50%,#f3f9ff 100%);
+  pointer-events:none; z-index:0;
+}
+.wrap { position:relative; z-index:1; }
+
+header {
+  background:var(--white); border-bottom:3px solid var(--blue);
+  padding:14px 24px; display:flex; align-items:center; justify-content:space-between;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.logo {
+  font-family:'Yomogi',cursive; font-size:22px; color:var(--blue-dark);
+  display:flex; align-items:center; gap:8px;
+}
+.logo-badge {
+  font-size:10px; background:var(--blue); color:white;
+  padding:2px 7px; border-radius:10px; font-weight:700;
+  letter-spacing:0.08em; align-self:flex-start; margin-top:2px;
+}
+.header-tag {
+  background:#fff3cd; border:1.5px solid #e6a800; color:#7a5500;
+  font-size:11px; font-weight:700; padding:4px 12px;
+  border-radius:20px; letter-spacing:0.06em;
+}
+
+.inner {
+  max-width:540px; margin:0 auto; padding:36px 20px 100px;
+  animation:fadeUp 0.45s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+.back-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  background:none; border:none; color:var(--text-soft);
+  font-family:'Noto Sans JP',sans-serif; font-size:13px;
+  cursor:pointer; padding:8px 0; margin-bottom:24px; transition:color 0.2s;
+}
+.back-btn:hover { color:var(--blue-dark); }
+
+.step-pill {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--blue); color:white; font-size:11px; font-weight:700;
+  padding:4px 14px; border-radius:20px; letter-spacing:0.1em; margin-bottom:16px;
+}
+.screen-h { font-size:24px; font-weight:700; color:var(--navy); line-height:1.4; margin-bottom:8px; }
+.screen-desc { font-size:13px; color:var(--text-soft); line-height:1.9; margin-bottom:28px; font-weight:300; }
+
+.confirm-card {
+  background:var(--white); border:2px solid var(--border);
+  border-radius:14px; padding:24px; margin-bottom:20px;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.confirm-card-title { font-size:11px; font-weight:700; letter-spacing:0.15em; color:var(--blue); margin-bottom:16px; }
+.confirm-row {
+  display:flex; gap:12px; padding:10px 0;
+  border-bottom:1px solid rgba(43,127,194,0.08); align-items:flex-start;
+}
+.confirm-row:last-child { border-bottom:none; }
+.c-badge {
+  font-size:10px; font-weight:700; background:rgba(43,127,194,0.1);
+  color:var(--blue); padding:2px 8px; border-radius:10px; flex-shrink:0; margin-top:2px;
+}
+.c-badge.last { background:rgba(230,168,0,0.15); color:#7a5500; }
+.c-val { font-size:15px; color:var(--text); line-height:1.5; }
+.sep { height:1px; background:var(--border); margin:20px 0; }
+
+.note-box {
+  background:rgba(43,127,194,0.05); border:1.5px dashed rgba(43,127,194,0.22);
+  border-radius:10px; padding:14px 16px; font-size:12px;
+  color:var(--text-soft); line-height:1.85; margin-bottom:28px;
+}
+
+.btn-full {
+  display:block; width:100%; padding:16px;
+  font-family:'Noto Sans JP',sans-serif; font-size:15px; font-weight:700;
+  border-radius:10px; cursor:pointer; text-align:center;
+  transition:all 0.2s; letter-spacing:0.06em; border:none;
+}
+.btn-full.primary {
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark)); color:white;
+  box-shadow:0 4px 16px rgba(43,127,194,0.35); margin-bottom:10px;
+}
+.btn-full.primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(43,127,194,0.45); }
+.btn-full.ghost { background:white; color:var(--text-soft); border:2px solid var(--border); }
+.btn-full.ghost:hover { border-color:var(--blue-light); color:var(--blue-dark); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="logo">🔵 おとうさんスイッチ <span class="logo-badge">2.0</span></div>
+  <div class="header-tag">✏️ こども用</div>
+</header>
+
+<div class="inner">
+  <button class="back-btn" onclick="history.back()">← もどる</button>
+  <div class="step-pill">STEP 2 / 2　確認して送る</div>
+  <h2 class="screen-h">これでいい？</h2>
+  <p class="screen-desc">内容を確かめて、OKなら送信しよう。<br>送ったら変えられないよ。</p>
+
+  <div class="confirm-card" id="confirm-body">
+    <div style="color:var(--text-soft);font-size:13px;text-align:center;padding:20px 0;">読み込み中…</div>
+  </div>
+
+  <div class="note-box">
+    🔒 送り主の名前は、お父さんには届かないよ。<br>
+    サービスの中では絶対に教えないから安心してね。<br>
+    <strong style="color:var(--navy)">直接会いに行って、自分で教えよう！</strong>
+  </div>
+
+  <button class="btn-full primary" onclick="doSend()">🎁 父の日に送信する！</button>
+  <button class="btn-full ghost" onclick="history.back()">内容を変える</button>
+</div>
+
+</div>
+
+<script>
+let DATA = null;
+try { DATA = JSON.parse(sessionStorage.getItem('otousan_data') || 'null'); } catch(e) {}
+if (!DATA) { window.location.href = 'child-form.html'; }
+
+(function renderConfirm() {
+  if (!DATA) return;
+  const fmt = DATA.date
+    ? new Date(DATA.date).toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})
+    : '未設定';
+  const rows = DATA.sw.map((t,i) => `
+    <div class="confirm-row">
+      <span class="c-badge ${i===4?'last':''}">SW${i+1}</span>
+      <span class="c-val">${t}</span>
+    </div>`).join('');
+  document.getElementById('confirm-body').innerHTML = `
+    <div class="confirm-card-title">スイッチの内容</div>
+    ${rows}
+    <div class="sep"></div>
+    <div class="confirm-row"><span class="c-badge">📱</span><span class="c-val">${DATA.phone}</span></div>
+    <div class="confirm-row"><span class="c-badge">📅</span><span class="c-val">${fmt}</span></div>
+  `;
+})();
+
+function doSend() {
+  // Data stays in sessionStorage so child-finish.html can read the date
+  window.location.href = 'child-finish.html';
+}
+</script>
+</body>
+</html>
