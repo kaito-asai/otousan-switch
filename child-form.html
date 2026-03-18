@@ -20,18 +20,16 @@
   --shadow: rgba(43,127,194,0.1);
   --gold: #e6a800;
   --gold-bg: #fffbef;
-  --red: #e74c3c;
+  --green: #27ae60;
 }
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Noto Sans JP',sans-serif; }
 body {
   background: var(--sky);
-  font-family: 'Noto Sans JP', sans-serif;
   min-height: 100vh;
   color: var(--text);
 }
 body::before {
-  content:'';
-  position:fixed; inset:0;
+  content:''; position:fixed; inset:0;
   background:
     radial-gradient(ellipse 260px 90px at 10% 8%, rgba(255,255,255,0.75) 0%, transparent 70%),
     radial-gradient(ellipse 200px 70px at 80% 5%, rgba(255,255,255,0.6) 0%, transparent 70%),
@@ -45,257 +43,259 @@ header {
   background: var(--white);
   border-bottom: 3px solid var(--blue);
   padding: 14px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   box-shadow: 0 2px 12px var(--shadow);
 }
 .logo {
   font-family: 'Yomogi', cursive;
-  font-size: 22px;
-  color: var(--blue-dark);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-size: 22px; color: var(--blue-dark);
+  display: flex; align-items: center; gap: 8px;
 }
 .logo-badge {
-  font-size: 10px;
-  background: var(--blue);
-  color: white;
-  padding: 2px 7px;
-  border-radius: 10px;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  align-self: flex-start;
-  margin-top: 2px;
+  font-size: 10px; background: var(--blue); color: white;
+  padding: 2px 7px; border-radius: 10px;
+  font-weight: 700; letter-spacing: 0.08em;
+  align-self: flex-start; margin-top: 2px;
 }
 .header-tag {
-  background: #fff3cd;
-  border: 1.5px solid #e6a800;
-  color: #7a5500;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
-  letter-spacing: 0.06em;
+  background: #fff3cd; border: 1.5px solid #e6a800;
+  color: #7a5500; font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px; letter-spacing: 0.06em;
 }
 
-/* INNER */
-.inner {
-  max-width: 540px;
-  margin: 0 auto;
-  padding: 36px 20px 100px;
-}
+/* SCREENS */
+.screen { display:none; animation:fadeUp 0.45s ease; }
+.screen.active { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
 /* HERO */
 .hero {
-  text-align: center;
-  padding: 56px 24px 48px;
-  max-width: 540px;
-  margin: 0 auto;
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; text-align:center;
+  padding: 52px 24px 52px; max-width:520px; margin:0 auto;
 }
 .hero-switch {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: linear-gradient(135deg,#ddeefa,#c5dff5);
-  border: 3px solid rgba(43,127,194,0.22);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 28px;
-  box-shadow: 0 8px 28px var(--shadow);
-  animation: float 3.5s ease-in-out infinite;
+  width:100px; height:100px; border-radius:50%;
+  background:linear-gradient(135deg,#ddeefa,#c5dff5);
+  border:3px solid rgba(43,127,194,0.22);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 28px;
+  box-shadow:0 8px 28px var(--shadow);
+  animation:float 3.5s ease-in-out infinite;
 }
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 .hero-knob {
-  width: 64px; height: 64px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--blue-light), var(--blue-dark));
-  box-shadow: 0 4px 14px rgba(43,127,194,0.5);
-  animation: glow 2.5s ease-in-out infinite;
+  width:64px; height:64px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,var(--blue-light),var(--blue-dark));
+  box-shadow:0 4px 14px rgba(43,127,194,0.5);
+  animation:glow 2.5s ease-in-out infinite;
 }
 @keyframes glow {
   0%,100%{box-shadow:0 4px 14px rgba(43,127,194,0.4)}
   50%    {box-shadow:0 4px 28px rgba(43,127,194,0.7),0 0 0 6px rgba(43,127,194,0.1)}
 }
 .hero-title {
-  font-family: 'Yomogi', cursive;
-  font-size: clamp(44px,12vw,80px);
-  color: var(--blue-dark);
-  line-height: 1.15;
-  margin-bottom: 16px;
-  text-shadow: 2px 3px 0 rgba(255,255,255,0.8);
+  font-family:'Yomogi',cursive;
+  font-size:clamp(44px,12vw,80px);
+  color:var(--blue-dark); line-height:1.15; margin-bottom:16px;
+  text-shadow:2px 3px 0 rgba(255,255,255,0.8);
 }
 .hero-desc {
-  font-size: 14px;
-  color: var(--text-soft);
-  line-height: 2.1;
-  margin-bottom: 40px;
-  font-weight: 300;
+  font-size:14px; color:var(--text-soft);
+  line-height:2.1; margin-bottom:40px; font-weight:300;
 }
 .btn-hero {
-  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-  color: white;
-  border: none;
-  padding: 18px 52px;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(43,127,194,0.38);
-  transition: all 0.2s;
-  letter-spacing: 0.08em;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white; border:none; padding:18px 52px;
+  font-size:16px; font-weight:700; border-radius:50px; cursor:pointer;
+  box-shadow:0 6px 20px rgba(43,127,194,0.38);
+  transition:all 0.2s; letter-spacing:0.08em;
 }
 .btn-hero:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(43,127,194,0.48); }
 
-/* STEP LABEL */
+/* FORM INNER */
+.inner { max-width:560px; margin:0 auto; padding:32px 20px 100px; }
+
 .step-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--blue);
-  color: white;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 14px;
-  border-radius: 20px;
-  letter-spacing: 0.1em;
-  margin-bottom: 16px;
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--blue); color:white;
+  font-size:11px; font-weight:700;
+  padding:4px 14px; border-radius:20px;
+  letter-spacing:0.1em; margin-bottom:16px;
 }
 .screen-h {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 24px;
-  color: var(--navy);
-  line-height: 1.4;
-  margin-bottom: 8px;
+  font-size:22px; font-weight:700;
+  color:var(--navy); line-height:1.4; margin-bottom:6px;
 }
 .screen-desc {
-  font-size: 13px;
-  color: var(--text-soft);
-  line-height: 1.9;
-  margin-bottom: 32px;
-  font-weight: 300;
+  font-size:13px; color:var(--text-soft);
+  line-height:1.9; margin-bottom:32px; font-weight:300;
 }
 
-/* SWITCH CARDS */
-.sw-list { display:flex; flex-direction:column; gap:14px; margin-bottom:32px; }
-.sw-card {
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  box-shadow: 0 2px 10px var(--shadow);
-  transition: border-color 0.2s, box-shadow 0.2s;
+/* PROGRESS BAR */
+.prog-wrap {
+  background:rgba(43,127,194,0.1);
+  border-radius:6px; height:5px;
+  margin-bottom:28px; overflow:hidden;
 }
-.sw-card:focus-within {
-  border-color: var(--blue);
-  box-shadow: 0 2px 16px rgba(43,127,194,0.2);
+.prog-fill {
+  height:100%;
+  background:linear-gradient(90deg,var(--blue-light),var(--blue));
+  border-radius:6px; transition:width 0.4s ease;
 }
-.sw-card.final {
-  background: var(--gold-bg);
-  border-color: rgba(230,168,0,0.3);
+
+/* SWITCH STEP */
+.sw-step { display:none; }
+.sw-step.active { display:block; animation:fadeUp 0.35s ease; }
+
+.sw-step-label {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:14px;
 }
-.sw-num {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue-light), var(--blue));
-  color: white;
-  font-size: 13px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 4px;
-  box-shadow: 0 2px 6px rgba(43,127,194,0.3);
+.sw-step-num {
+  width:30px; height:30px; border-radius:50%;
+  background:linear-gradient(135deg,var(--blue-light),var(--blue));
+  color:white; font-size:13px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 2px 6px rgba(43,127,194,0.3); flex-shrink:0;
 }
-.sw-card.final .sw-num {
-  background: linear-gradient(135deg, #f0c040, var(--gold));
+.sw-step-title { font-size:15px; font-weight:700; color:var(--navy); }
+.sw-step-sub { font-size:12px; color:var(--text-soft); font-weight:300; margin-top:2px; }
+
+/* CHOICE CARDS */
+.choice-list { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
+
+.choice-card {
+  background:var(--white);
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:16px 20px;
+  cursor:pointer;
+  transition:all 0.2s ease;
+  display:flex; align-items:center; gap:14px;
+  box-shadow:0 2px 10px var(--shadow);
+  -webkit-tap-highlight-color:transparent;
 }
-.sw-inner { flex:1; }
-.sw-hint {
-  font-size: 11px;
-  color: var(--text-soft);
-  margin-bottom: 7px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+.choice-card:hover {
+  border-color:var(--blue-light);
+  box-shadow:0 4px 16px rgba(43,127,194,0.18);
+  transform:translateY(-1px);
 }
-.sw-input {
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid rgba(43,127,194,0.15);
-  background: transparent;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 16px;
-  color: var(--text);
-  padding: 6px 0;
-  outline: none;
-  transition: border-color 0.2s;
+.choice-card.selected {
+  border-color:var(--blue);
+  background:rgba(43,127,194,0.05);
+  box-shadow:0 4px 18px rgba(43,127,194,0.22);
 }
-.sw-input:focus { border-bottom-color: var(--blue); }
-.sw-input::placeholder { color:rgba(90,122,150,0.38); font-size:14px; }
-.sw-fixed {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 19px;
-  color: #7a5500;
-  padding: 6px 0;
-  font-weight: 700;
+.choice-radio {
+  width:22px; height:22px; border-radius:50%;
+  border:2px solid var(--border);
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
 }
-.sw-fixed-note {
-  font-size: 11px;
-  color: rgba(122,85,0,0.65);
-  margin-top: 6px;
-  line-height: 1.6;
+.choice-card.selected .choice-radio {
+  border-color:var(--blue);
+  background:var(--blue);
 }
+.choice-radio::after {
+  content:''; width:8px; height:8px; border-radius:50%;
+  background:white; opacity:0; transition:opacity 0.2s;
+}
+.choice-card.selected .choice-radio::after { opacity:1; }
+.choice-text { font-size:15px; color:var(--text); font-weight:400; line-height:1.5; }
+.choice-card.selected .choice-text { color:var(--navy); font-weight:500; }
+
+/* Final switch (はなす) */
+.final-sw-card {
+  background:var(--gold-bg);
+  border:2px solid rgba(230,168,0,0.3);
+  border-radius:12px;
+  padding:16px 20px;
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:24px;
+}
+.final-sw-num {
+  width:30px; height:30px; border-radius:50%;
+  background:linear-gradient(135deg,#f0c040,var(--gold));
+  color:white; font-size:13px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.final-sw-inner { flex:1; }
+.final-sw-label { font-size:11px; color:rgba(122,85,0,0.65); margin-bottom:4px; }
+.final-sw-val { font-size:18px; font-weight:700; color:#7a5500; }
+.final-sw-note { font-size:11px; color:rgba(122,85,0,0.6); margin-top:4px; line-height:1.6; }
+
+/* DONE steps summary */
+.done-list { display:flex; flex-direction:column; gap:8px; margin-bottom:24px; }
+.done-item {
+  background:rgba(39,174,96,0.05);
+  border:1.5px solid rgba(39,174,96,0.2);
+  border-radius:10px;
+  padding:12px 16px;
+  display:flex; align-items:center; gap:12px;
+  animation:fadeUp 0.3s ease;
+}
+.done-num {
+  width:26px; height:26px; border-radius:50%;
+  background:var(--green); color:white;
+  font-size:12px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.done-text { font-size:14px; color:var(--navy); font-weight:500; }
+.done-check { margin-left:auto; color:var(--green); font-size:16px; }
+
+/* NAV BUTTONS */
+.nav-row {
+  display:flex; gap:10px; margin-bottom:32px;
+}
+.btn-next {
+  flex:1; padding:16px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white; border:none; font-size:15px; font-weight:700;
+  border-radius:10px; cursor:pointer;
+  box-shadow:0 4px 16px rgba(43,127,194,0.35);
+  transition:all 0.2s; letter-spacing:0.06em;
+}
+.btn-next:disabled {
+  opacity:0.45; cursor:default; transform:none !important;
+  box-shadow:none;
+}
+.btn-next:not(:disabled):hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(43,127,194,0.45); }
+.btn-prev {
+  padding:16px 20px;
+  background:white; color:var(--text-soft);
+  border:2px solid var(--border); font-size:15px;
+  border-radius:10px; cursor:pointer;
+  transition:all 0.2s;
+}
+.btn-prev:hover { border-color:var(--blue-light); color:var(--blue-dark); }
 
 /* FIELDS */
-.field { margin-bottom: 22px; }
+.field { margin-bottom:22px; }
 .field-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-soft);
-  letter-spacing: 0.1em;
-  margin-bottom: 8px;
+  display:block; font-size:12px; font-weight:700;
+  color:var(--text-soft); letter-spacing:0.1em; margin-bottom:8px;
 }
 .field-box {
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  padding: 13px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 2px 8px var(--shadow);
-  transition: border-color 0.2s;
+  background:var(--white); border:2px solid var(--border);
+  border-radius:10px; padding:13px 16px;
+  display:flex; align-items:center; gap:10px;
+  box-shadow:0 2px 8px var(--shadow); transition:border-color 0.2s;
 }
-.field-box:focus-within { border-color: var(--blue); }
-.field-icon { font-size: 17px; opacity: 0.55; }
+.field-box:focus-within { border-color:var(--blue); }
+.field-icon { font-size:17px; opacity:0.55; }
 .field-input {
-  flex:1;
-  border:none;
-  background:transparent;
-  font-family:'Noto Sans JP',sans-serif;
-  font-size:16px;
-  color:var(--text);
-  outline:none;
+  flex:1; border:none; background:transparent;
+  font-size:16px; color:var(--text); outline:none;
 }
 .field-input::placeholder { color:rgba(90,122,150,0.38); font-size:14px; }
 .field-input[type="date"]::-webkit-calendar-picker-indicator { cursor:pointer; opacity:0.45; }
-.err { font-size:12px; color:var(--red); margin-top:6px; display:none; }
+.err { font-size:12px; color:#e74c3c; margin-top:6px; display:none; }
 .err.show { display:block; }
 
-/* BTN */
 .btn-full {
-  display:block; width:100%;
-  padding:16px;
-  font-family:'Noto Sans JP',sans-serif;
+  display:block; width:100%; padding:16px;
   font-size:15px; font-weight:700;
   border-radius:10px; cursor:pointer;
   text-align:center; transition:all 0.2s;
@@ -303,24 +303,16 @@ header {
 }
 .btn-full.primary {
   background:linear-gradient(135deg,var(--blue),var(--blue-dark));
-  color:white;
-  box-shadow:0 4px 16px rgba(43,127,194,0.35);
-  margin-bottom:10px;
+  color:white; box-shadow:0 4px 16px rgba(43,127,194,0.35); margin-bottom:10px;
 }
 .btn-full.primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(43,127,194,0.45); }
-
-/* SCREEN */
-.screen { display:none; animation:fadeUp 0.5s ease; }
-.screen.active { display:block; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
 /* TOAST */
 .toast {
   position:fixed; bottom:28px; left:50%;
   transform:translateX(-50%) translateY(80px);
   background:var(--navy); color:white;
-  padding:12px 24px; border-radius:8px;
-  font-size:13px;
+  padding:12px 24px; border-radius:8px; font-size:13px;
   transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
   z-index:9999; white-space:nowrap;
   box-shadow:0 4px 20px rgba(15,58,92,0.3);
@@ -332,10 +324,7 @@ header {
 <div class="wrap">
 
 <header>
-  <div class="logo">
-    🔵 おとうさんスイッチ
-    <span class="logo-badge">2.0</span>
-  </div>
+  <div class="logo">🔵 おとうさんスイッチ <span class="logo-badge">2.0</span></div>
   <div class="header-tag">✏️ こども用</div>
 </header>
 
@@ -357,40 +346,157 @@ header {
 <!-- FORM -->
 <div id="s-form" class="screen">
   <div class="inner">
-    <div class="step-pill">STEP 1 / 2　指示を書く</div>
-    <h2 class="screen-h">お父さんへの<br>指示を５つ書こう</h2>
+    <div class="step-pill" id="step-pill">STEP 1 / 2　指示を選ぶ</div>
+    <h2 class="screen-h">お父さんへの<br>指示を選ぼう</h2>
     <p class="screen-desc">
-      スイッチ１〜４は自由に書いてね。<br>
-      スイッチ５は「はなす」に決まってるよ。<br>
-      父の日当日、こっそりお父さんに届くよ。
+      スイッチ１〜４を選んでね。<br>
+      最初は簡単、だんだん難しくなるよ。<br>
+      スイッチ５は「はなす」に決まってるよ。
     </p>
 
-    <div class="sw-list">
-      <div class="sw-card"><div class="sw-num">1</div><div class="sw-inner"><div class="sw-hint">最初のスイッチ</div><input class="sw-input" id="sw1" type="text" placeholder="例：好きな曲を流す" maxlength="25"></div></div>
-      <div class="sw-card"><div class="sw-num">2</div><div class="sw-inner"><div class="sw-hint">２番目のスイッチ</div><input class="sw-input" id="sw2" type="text" placeholder="例：昔の写真を見る" maxlength="25"></div></div>
-      <div class="sw-card"><div class="sw-num">3</div><div class="sw-inner"><div class="sw-hint">３番目のスイッチ</div><input class="sw-input" id="sw3" type="text" placeholder="例：好きなものを食べる" maxlength="25"></div></div>
-      <div class="sw-card"><div class="sw-num">4</div><div class="sw-inner"><div class="sw-hint">４番目のスイッチ</div><input class="sw-input" id="sw4" type="text" placeholder="例：散歩に行く" maxlength="25"></div></div>
-      <div class="sw-card final"><div class="sw-num">5</div><div class="sw-inner"><div class="sw-hint">最後のスイッチ（変えられないよ）</div><div class="sw-fixed">はなす</div><div class="sw-fixed-note">💬 これは変えられないよ。会話をはじめる大切なスイッチ。</div></div></div>
+    <!-- progress -->
+    <div class="prog-wrap">
+      <div class="prog-fill" id="prog-fill" style="width:0%"></div>
     </div>
 
-    <div class="field">
-      <label class="field-label">📱 お父さんの電話番号</label>
-      <div class="field-box">
-        <span class="field-icon">📱</span>
-        <input class="field-input" id="phone" type="tel" placeholder="090-0000-0000">
+    <!-- Already chosen switches summary -->
+    <div class="done-list" id="done-list"></div>
+
+    <!-- SW 1 -->
+    <div class="sw-step active" id="step-1">
+      <div class="sw-step-label">
+        <div class="sw-step-num">1</div>
+        <div>
+          <div class="sw-step-title">スイッチ１　— 簡単なやつ</div>
+          <div class="sw-step-sub">体を動かす指示だよ</div>
+        </div>
       </div>
-      <div class="err" id="phone-err">正しい電話番号を入れてね</div>
-    </div>
-
-    <div class="field">
-      <label class="field-label">📅 届ける日（父の日）</label>
-      <div class="field-box">
-        <span class="field-icon">📅</span>
-        <input class="field-input" id="send-date" type="date">
+      <div class="choice-list">
+        <div class="choice-card" onclick="select(1,0,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">手をたたく</div>
+        </div>
+        <div class="choice-card" onclick="select(1,1,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">笑う</div>
+        </div>
+        <div class="choice-card" onclick="select(1,2,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">ジャンプする</div>
+        </div>
       </div>
     </div>
 
-    <button class="btn-full primary" onclick="toConfirm()">内容を確認する →</button>
+    <!-- SW 2 -->
+    <div class="sw-step" id="step-2">
+      <div class="sw-step-label">
+        <div class="sw-step-num">2</div>
+        <div>
+          <div class="sw-step-title">スイッチ２　— ちょっと恥ずかしい</div>
+          <div class="sw-step-sub">少しだけハードルが上がるよ</div>
+        </div>
+      </div>
+      <div class="choice-list">
+        <div class="choice-card" onclick="select(2,0,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">家の端から端まで３往復する</div>
+        </div>
+        <div class="choice-card" onclick="select(2,1,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">お母さんに「愛してる」という</div>
+        </div>
+        <div class="choice-card" onclick="select(2,2,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">「あ」と三回言う</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SW 3 -->
+    <div class="sw-step" id="step-3">
+      <div class="sw-step-label">
+        <div class="sw-step-num">3</div>
+        <div>
+          <div class="sw-step-title">スイッチ３　— 思い出すやつ</div>
+          <div class="sw-step-sub">こどもとの記憶を思い出してもらうよ</div>
+        </div>
+      </div>
+      <div class="choice-list">
+        <div class="choice-card" onclick="select(3,0,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">こどもと一番笑った日を思い出す</div>
+        </div>
+        <div class="choice-card" onclick="select(3,1,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">こどもとはじめて一緒に行った場所を思い出す</div>
+        </div>
+        <div class="choice-card" onclick="select(3,2,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">こどもと最後に話した内容を思い出す</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SW 4 -->
+    <div class="sw-step" id="step-4">
+      <div class="sw-step-label">
+        <div class="sw-step-num">4</div>
+        <div>
+          <div class="sw-step-title">スイッチ４　— 一番大切なやつ</div>
+          <div class="sw-step-sub">「はなす」の前の最後のスイッチだよ</div>
+        </div>
+      </div>
+      <div class="choice-list">
+        <div class="choice-card" onclick="select(4,0,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">小さい頃のこどもを思い出す</div>
+        </div>
+        <div class="choice-card" onclick="select(4,1,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">はじめて抱いた時を思い出す</div>
+        </div>
+        <div class="choice-card" onclick="select(4,2,this)">
+          <div class="choice-radio"></div>
+          <div class="choice-text">名前をつけた時を思い出す</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SW 5 fixed -->
+    <div class="sw-step" id="step-5">
+      <div class="final-sw-card">
+        <div class="final-sw-num">5</div>
+        <div class="final-sw-inner">
+          <div class="final-sw-label">最後のスイッチ（変えられないよ）</div>
+          <div class="final-sw-val">はなす</div>
+          <div class="final-sw-note">💬 これは変えられないよ。会話をはじめる大切なスイッチ。</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">📱 お父さんの電話番号</label>
+        <div class="field-box">
+          <span class="field-icon">📱</span>
+          <input class="field-input" id="phone" type="tel" placeholder="090-0000-0000">
+        </div>
+        <div class="err" id="phone-err">正しい電話番号を入れてね</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">📅 届ける日（父の日）</label>
+        <div class="field-box">
+          <span class="field-icon">📅</span>
+          <input class="field-input" id="send-date" type="date">
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div class="nav-row" id="nav-row">
+      <button class="btn-prev" id="btn-prev" onclick="prevStep()" style="display:none">← もどる</button>
+      <button class="btn-next" id="btn-next" onclick="nextStep()" disabled>次へ →</button>
+    </div>
+
   </div>
 </div>
 
@@ -398,28 +504,110 @@ header {
 <div class="toast" id="toast"></div>
 
 <script>
+const CHOICES = { 1:null, 2:null, 3:null, 4:null };
+const LABELS = {
+  1: ['手をたたく','笑う','ジャンプする'],
+  2: ['家の端から端まで３往復する','お母さんに「愛してる」という','「あ」と三回言う'],
+  3: ['こどもと一番笑った日を思い出す','こどもとはじめて一緒に行った場所を思い出す','こどもと最後に話した内容を思い出す'],
+  4: ['小さい頃のこどもを思い出す','はじめて抱いた時を思い出す','名前をつけた時を思い出す'],
+};
+let currentStep = 1;
+
 function goTo(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
 
+function select(sw, idx, el) {
+  // deselect siblings
+  el.closest('.choice-list').querySelectorAll('.choice-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  CHOICES[sw] = idx;
+  document.getElementById('btn-next').disabled = false;
+}
+
+function updateUI() {
+  // show current step panel
+  for (let i=1; i<=5; i++) {
+    document.getElementById(`step-${i}`).classList.toggle('active', i===currentStep);
+  }
+
+  // progress bar: steps 1-4 are selectable, step 5 is fields
+  const pct = ((currentStep - 1) / 5) * 100;
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  // done list
+  const dl = document.getElementById('done-list');
+  dl.innerHTML = '';
+  for (let i=1; i<currentStep && i<=4; i++) {
+    const d = document.createElement('div');
+    d.className = 'done-item';
+    d.innerHTML = `
+      <div class="done-num">${i}</div>
+      <div class="done-text">${LABELS[i][CHOICES[i]]}</div>
+      <div class="done-check">✓</div>
+    `;
+    dl.appendChild(d);
+  }
+
+  // prev button
+  const prev = document.getElementById('btn-prev');
+  prev.style.display = currentStep > 1 ? '' : 'none';
+
+  // next button label & state
+  const next = document.getElementById('btn-next');
+  if (currentStep <= 4) {
+    next.textContent = '次へ →';
+    next.disabled = CHOICES[currentStep] === null;
+  } else {
+    next.textContent = '内容を確認する →';
+    next.disabled = false;
+  }
+
+  // step pill
+  document.getElementById('step-pill').textContent =
+    currentStep <= 4
+      ? `スイッチ ${currentStep} / 4 を選んでいます`
+      : 'STEP 2 / 2　電話番号・日付を入力';
+
+  window.scrollTo(0,0);
+}
+
+function nextStep() {
+  if (currentStep <= 4) {
+    if (CHOICES[currentStep] === null) { showToast('選択肢を選んでね'); return; }
+    currentStep++;
+    updateUI();
+  } else {
+    toConfirm();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) { currentStep--; updateUI(); }
+}
+
 function toConfirm() {
-  const vals = ['sw1','sw2','sw3','sw4'].map(id=>document.getElementById(id).value.trim());
-  if (vals.some(v=>!v)) { showToast('⚠️ スイッチ１〜４を全部書いてね'); return; }
   const ph = document.getElementById('phone').value.trim().replace(/-/g,'');
   if (!ph.match(/^0\d{9,10}$/)) {
     document.getElementById('phone-err').classList.add('show'); return;
   }
   document.getElementById('phone-err').classList.remove('show');
 
-  const data = {
-    sw: [...vals, 'はなす'],
+  const sw = [
+    LABELS[1][CHOICES[1]],
+    LABELS[2][CHOICES[2]],
+    LABELS[3][CHOICES[3]],
+    LABELS[4][CHOICES[4]],
+    'はなす',
+  ];
+
+  sessionStorage.setItem('otousan_data', JSON.stringify({
+    sw,
     phone: document.getElementById('phone').value.trim(),
-    date: document.getElementById('send-date').value,
-  };
-  // Pass to confirm page via sessionStorage
-  sessionStorage.setItem('otousan_data', JSON.stringify(data));
+    date:  document.getElementById('send-date').value,
+  }));
   window.location.href = 'child-confirm.html';
 }
 
@@ -428,7 +616,7 @@ function showToast(msg) {
   const t=document.getElementById('toast');
   t.textContent=msg; t.classList.add('show');
   clearTimeout(toastT);
-  toastT=setTimeout(()=>t.classList.remove('show'),2800);
+  toastT=setTimeout(()=>t.classList.remove('show'),2600);
 }
 
 // default Father's Day
@@ -438,6 +626,8 @@ if(fd<today) fd.setFullYear(fd.getFullYear()+1);
 const el=document.getElementById('send-date');
 el.value=fd.toISOString().split('T')[0];
 el.min=today.toISOString().split('T')[0];
+
+updateUI();
 </script>
 </body>
 </html>
