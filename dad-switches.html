@@ -180,46 +180,7 @@ body::before {
 }
 .sw-item.waiting .sw-text {
   color: rgba(90,122,150,0.38);
-  font-style: italic; font-size: 14px;
-}
-
-/* Thought bubble */
-.thought-section {
-  margin-top: 24px;
-  display: none;
-  animation: bubbleIn 0.45s cubic-bezier(0.34,1.3,0.64,1);
-}
-.thought-section.show { display: block; }
-@keyframes bubbleIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.thought-card {
-  background: rgba(255,255,255,0.9);
-  border: 2px solid rgba(43,127,194,0.12);
-  border-radius: 14px;
-  padding: 18px 22px 18px 28px;
-  font-family: 'Noto Sans JP', sans-serif;
   font-size: 14px;
-  color: var(--text-soft);
-  line-height: 2;
-  font-weight: 300;
-  font-style: italic;
-  position: relative;
-  box-shadow: 0 2px 12px var(--shadow);
-}
-.thought-card::before {
-  content: '💭';
-  font-style: normal;
-  position: absolute;
-  top: -15px; left: 22px;
-  font-size: 22px;
-}
-.thought-who {
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.12em; color: var(--text-soft);
-  opacity: 0.6; margin-bottom: 6px;
-  font-style: normal; font-family: 'Noto Sans JP', sans-serif;
 }
 
 /* TOAST */
@@ -258,13 +219,6 @@ body::before {
     </div>
 
     <div class="sw-list" id="sw-list"></div>
-
-    <div class="thought-section" id="thought-section">
-      <div class="thought-card">
-        <div class="thought-who">お父さんのひとりごと</div>
-        <div id="thought-text"></div>
-      </div>
-    </div>
   </div>
 
 </div>
@@ -279,14 +233,6 @@ const SWITCHES = [
   '好きなものを食べる',
   '散歩に行く',
   'はなす',
-];
-
-const THOUGHTS = [
-  'そういや最近、あの曲全然聴いてなかったな…',
-  '懐かしいな。こんな写真まだあったのか。あいつも一緒に見てたっけ。',
-  'ひさしぶりにこれ食べたな。あいつもよく一緒に食べてたな。',
-  '散歩か。最後に一緒に歩いたの、いつだったかな… この指示、もしかして。',
-  '「はなす」か。誰かに、連絡してみるか。',
 ];
 
 let step = 0;
@@ -329,10 +275,6 @@ function render() {
 function press(i) {
   if (i !== step) return;
   step++;
-
-  // Show thought bubble
-  document.getElementById('thought-text').textContent = THOUGHTS[i];
-  document.getElementById('thought-section').classList.add('show');
 
   render();
   showToast(`スイッチ ${i + 1} オン ✓`);
