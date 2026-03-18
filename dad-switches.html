@@ -22,7 +22,7 @@
   --gold-bg: #fffbef;
   --green: #27ae60;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Noto Sans JP',sans-serif; }
 body {
   background: var(--sky);
   font-family: 'Noto Sans JP', sans-serif;
@@ -227,13 +227,23 @@ body::before {
 <div class="cfwrap" id="cfwrap"></div>
 
 <script>
-const SWITCHES = [
-  '好きな曲を流す',
-  '昔の写真を見る',
-  '好きなものを食べる',
-  '散歩に行く',
+// 子どもが選んだスイッチをsessionStorageから読み込む
+// 単独プレビュー時はデモデータにフォールバック
+const DEMO_SW = [
+  '手をたたく',
+  '家の端から端まで３往復する',
+  'こどもと一番笑った日を思い出す',
+  '小さい頃のこどもを思い出す',
   'はなす',
 ];
+
+let SWITCHES = DEMO_SW;
+try {
+  const saved = JSON.parse(sessionStorage.getItem('otousan_data') || 'null');
+  if (saved && Array.isArray(saved.sw) && saved.sw.length === 5) {
+    SWITCHES = saved.sw;
+  }
+} catch(e) {}
 
 let step = 0;
 
